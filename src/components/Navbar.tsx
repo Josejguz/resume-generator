@@ -8,13 +8,13 @@ export default function Navbar() {
                 <a href='/'><h1 className='text-2xl font-bold text-white'>Resumade</h1></a>
                 <ul className='flex space-x-8 p-4'>
                     <li>
-                        <a href='#' className='text-white'>Templates</a>
+                        <a href='./templates' className='text-white'>Templates</a>
                     </li>
                     <li>
-                        <a href='#' className='text-white'>Tips</a>
+                        <a href='./tips' className='text-white'>Tips</a>
                     </li>
                     <li>
-                        <a href='#' className='text-white'>Build</a>
+                        <a href='./build' className='text-white'>Build</a>
                     </li>
                 </ul>
                 <a href='#' className='bg-amber-400 px-3 py-1 rounded-2xl'><h3 className='text-white'>Login</h3></a>
