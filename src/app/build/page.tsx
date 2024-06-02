@@ -1,18 +1,29 @@
 import Navbar from "@/components/Navbar";
 import { PlusIcon } from "@heroicons/react/16/solid";
+import React from "react";
+import { useState } from "react";
+import BuildResume from "./components/BuildResume";
 
 export default function Home() {
+
+    //const [buildResumeStatus, setBuildResumeStatus] = useState(false);
+
+    const handleNewResume = () => {
+        console.log("New Resume");
+    }
+
     return (
         <div>
             <Navbar />
             <div className="flex flex-col mx-10 my-8">
                 <div>
-                    <h1 className="text-xl font-bold">Build Your Resume!</h1>
+                    <h1 className="text-3xl font-bold">Build Your Resume!</h1>
                 </div>
                 <br/>
 
                 <div>
-                    <button className="bg-red-500 hover:bg-red-700 py-3 px-4 text-white rounded-3xl"><span>New Resume <PlusIcon className="h-6"/></span></button>
+                    {/*<button className="bg-red-500 hover:bg-red-700 py-3 px-4 text-white rounded-3xl"><span>New Resume <PlusIcon className="h-6"/></span></button> */}
+                    <BuildResume />
                 </div>
                 <br />
 
