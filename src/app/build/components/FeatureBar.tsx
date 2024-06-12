@@ -27,7 +27,7 @@ export default function FeatureBar() {
     return (
         <nav>
             <div>
-                <ul className="flex justify-evenly border-b-2 bg-red-500 text-white">
+                <ul className="flex justify-evenly border-b-2 bg-home text-white">
                     <li>
                         <button onClick={() => handleTabChange("InformationTab")} >Information</button>
                     </li>
