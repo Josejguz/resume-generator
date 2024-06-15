@@ -1,7 +1,18 @@
+'use client'
+
 import React from 'react';
-import { LightBulbIcon } from '@heroicons/react/16/solid';
+import { LightBulbIcon, UserCircleIcon } from '@heroicons/react/16/solid';
 
 export default function Navbar() {
+
+    const handleLogin = () => {
+        window.location.href = '/login';
+    }
+
+    const onClickProfile = () => {
+        window.location.href = '/profile';
+    }
+
     return (
         <nav className='sticky top-0 left-0 z-50 h-20 bg-home'>
             <div className='container mx-auto flex justify-between items-center p-4 h-20'>
@@ -17,7 +28,8 @@ export default function Navbar() {
                         <a href='./build' className='text-white'>Build</a>
                     </li>
                 </ul>
-                <a href='./login' className='bg-amber-400 px-3 py-1 rounded-2xl'><h3 className='text-white'>Login</h3></a>
+                <button className='bg-amber-400 px-3 py-1 rounded-2xl text-white' onClick={handleLogin} >Login</button>
+                <UserCircleIcon className='h-8 w-8 text-white hover:cursor-pointer' onClick={onClickProfile} />
             </div>
         </nav>
     )
