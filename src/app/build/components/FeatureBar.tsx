@@ -26,16 +26,16 @@ export default function FeatureBar() {
 
     return (
         <nav>
-            <div>
-                <ul className="flex justify-evenly border-b-2 bg-home text-white">
+            <div className="">
+                <ul className="flex text-white p-4 text-xl font-extrabold">
                     <li>
-                        <button onClick={() => handleTabChange("InformationTab")} >Information</button>
+                        <button className="w-44 bg-home hover:bg-home-hover py-5 px-8" onClick={() => handleTabChange("InformationTab")} >Information</button>
                     </li>
                     <li>
-                        <button onClick={() => handleTabChange("StylingTab")}>Styling</button>
+                        <button className="w-44 bg-home hover:bg-home-hover  py-5 px-8" onClick={() => handleTabChange("StylingTab")}>Styling    </button>
                     </li>
                     <li>
-                        <button onClick={() => handleTabChange("FormatTab")}>Format</button>
+                        <button className="w-44 bg-home hover:bg-home-hover py-5 px-8" onClick={() => handleTabChange("FormatTab")}>Format     </button>
                     </li>
                 </ul>
                 <br/>
