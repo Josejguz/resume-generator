@@ -48,7 +48,9 @@ export default function InformationTab() {
         localStorage.setItem("skills", formData.skills);
     }, [formData]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const skill_list : string[] = formData.skills.split(",");
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>|React.ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
@@ -70,14 +72,19 @@ export default function InformationTab() {
         }
     };
 
-    const showSection = () => {
-        return (
-        <dialog>
-            <form>
-                <h1>New Section</h1>
-            </form>
-        </dialog>
-        );
+    const addSkill = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const skill = document.getElementById("skills") as HTMLInputElement;
+        setFormData({ ...formData, skills: formData.skills + "," + skill.value });
+        skill.value = "";
+        console.log(skill_list);
+    }
+
+    const removeSkill = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+        e.preventDefault();
+        const skill = document.getElementById("skills") as HTMLInputElement;
+        setFormData({ ...formData, skills: formData.skills.replace(`,${skill.value}` || skill.value, "") });
+        console.log(skill_list);
     }
 
 
@@ -95,7 +102,7 @@ export default function InformationTab() {
                         {/*First Name Field*/}
                         <div className="flex flex-col">
                             <label htmlFor="first_name">First Name <span className="text-red-500">*</span></label>
-                            <input type="text" id="first_name" name="first_name" value={formData.first_name} placeholder="First Name" onChange={handleChange} className="border-2 border-home" required />
+                            <input type="text" id="first_name" name="first_name" value={formData.first_name} placeholder="First Name" onChange={handleChange} className="border-2 border-home" />
                         </div>
                         
                         <div className=" w-2"></div>
@@ -103,7 +110,7 @@ export default function InformationTab() {
                         {/*Last Name Field*/}
                         <div className="flex flex-col">
                             <label htmlFor="last_name">Last Name <span className="text-red-500">*</span></label>
-                            <input type="text" id="last_name" name="last_name" value={formData.last_name} placeholder="Last Name" onChange={handleChange} className="border-2 border-home" required />
+                            <input type="text" id="last_name" name="last_name" value={formData.last_name} placeholder="Last Name" onChange={handleChange} className="border-2 border-home" />
                         </div>
                     </div>
 
@@ -200,12 +207,22 @@ export default function InformationTab() {
                         <h2 className="flex w-11/12">Skills</h2>
                         <MinusCircleIcon className="h-7 w-7 hover:text-gray-300" onClick={() => hideSection("skill_section")}/>
                     </div>
+                    <br/>
+
+                    <h1>Skills</h1>
+                    <ul className="flex flex-rows">
+                        {skill_list ? skill_list.map((skill, index) => {
+                            return <li key={index}><button className="bg-home hover:bg-home-hover text-white p-2 rounded-lg mr-2 flex flex-rows" >{skill}
+                            <MinusCircleIcon className=" ml-2 h-7 w-7 hover:text-gray-300" onClick={removeSkill}/></button>
+                            </li>
+                        }): null}
+                    </ul>
+                    <br/>
 
                     <label htmlFor="skills">Add Skill</label>
                     <div className="flex flex-row">
                         <input type="text" id="skills" name="skills" className="border-2 border-home w-1/2"/>
-                        
-                        <button className="bg-home hover:bg-home-hover text-white p-2 rounded-lg ml-2">Add</button>
+                        <button className="bg-home hover:bg-home-hover text-white p-2 rounded-lg ml-2" onClick={addSkill} >Add</button>
                     </div>
                     <br/>
                 </div>
@@ -240,7 +257,7 @@ export default function InformationTab() {
                     <br/>
                 </div>
 
-                <button className="bg-home hover:bg-home-hover text-white p-2 rounded-lg" onClick={showSection}><span className="flex justify-center flex-row">Add Section <PlusIcon className="h-6 w-6" /></span></button>
+                <button className="bg-home hover:bg-home-hover text-white p-2 rounded-lg" ><span className="flex justify-center flex-row">Add Section <PlusIcon className="h-6 w-6" /></span></button>
                 <br/>
 
                 <button type="submit" className="bg-home hover:bg-home-hover text-white p-2 rounded-lg">Save</button>
