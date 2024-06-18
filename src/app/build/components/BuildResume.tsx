@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { PlusIcon, PencilSquareIcon } from '@heroicons/react/20/solid'
-import NewResume from './NewResume';
+import NewResume from '../create-resume/NewResume';
 
 export default function BuildResume() {
 
@@ -11,7 +11,9 @@ export default function BuildResume() {
     const renderDisplay = () => {
        switch(display) {
            case "NewResume":
-               return <NewResume />
+               window.location.href = "/build/create-resume/";
+                break;
+                
            case "default":
                return (
                    <div className='flex justify-center'>
