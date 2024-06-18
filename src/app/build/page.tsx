@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import { PlusIcon } from "@heroicons/react/16/solid";
 import React from "react";
 import { useState } from "react";
+import NewResume from "./components/NewResume";
 import BuildResume from "./components/BuildResume";
 
 export default function Home() {
@@ -16,8 +17,8 @@ export default function Home() {
         <div>
             <Navbar />
             <div className="flex flex-col mx-10 my-8">
-                <div>
-                    <h1 className="text-3xl font-bold">Build Your Resume!</h1>
+                <div className="flex justify-center">
+                    <h1 className="text-3xl font-bold">Build Your Resume</h1>
                 </div>
                 <br/>
 
