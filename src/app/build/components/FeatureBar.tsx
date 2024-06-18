@@ -1,8 +1,6 @@
 'use client'
 
 import React from "react";
-import { useState } from "react";
-import InformationTab from "./InformationTab";
 export default function FeatureBar({handleTabChange}: {handleTabChange: any}) {
 
     const updateActiveTab = (tab: string) => {
