@@ -3,25 +3,10 @@
 import React from "react";
 import { useState } from "react";
 import InformationTab from "./InformationTab";
-export default function FeatureBar() {
+export default function FeatureBar({handleTabChange}: {handleTabChange: any}) {
 
-    const [activeTab, setActiveTab] = useState("InformationTab");
-
-    const handleTabChange = (tab: string) => {
-        setActiveTab(tab);
-    }
-
-    const renderTab = () => {
-        switch(activeTab) {
-            case "InformationTab":
-                return <InformationTab />
-            case "StylingTab":
-                return <h1>Styling Tab</h1>
-            case "FormatTab":
-                return <h1>Format Tab</h1>
-            default:
-                return <InformationTab />
-        }
+    const updateActiveTab = (tab: string) => {
+        handleTabChange(tab);
     }
 
     return (
@@ -29,13 +14,13 @@ export default function FeatureBar() {
             <nav>
                 <ul className="flex">
                     <li>
-                        <button className="w-44 bg-home hover:bg-home-hover py-5 px-8" onClick={() => handleTabChange("InformationTab")} >Information</button>
+                        <button className="w-44 bg-home hover:bg-home-hover py-5 px-8" onClick={() => updateActiveTab ("InformationTab")} >Information</button>
                     </li>
                     <li>
-                        <button className="w-44 bg-home hover:bg-home-hover  py-5 px-8" onClick={() => handleTabChange("StylingTab")}>Styling    </button>
+                        <button className="w-44 bg-home hover:bg-home-hover  py-5 px-8" onClick={() => updateActiveTab("StylingTab")}>Styling    </button>
                     </li>
                     <li>
-                        <button className="w-44 bg-home hover:bg-home-hover py-5 px-8" onClick={() => handleTabChange("FormatTab")}>Format     </button>
+                        <button className="w-44 bg-home hover:bg-home-hover py-5 px-8" onClick={() => updateActiveTab("FormatTab")}>Format     </button>
                     </li>
                 </ul>
                 <br/>   
