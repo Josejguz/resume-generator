@@ -25,9 +25,9 @@ export default function FeatureBar() {
     }
 
     return (
-        <nav>
-            <div className="">
-                <ul className="flex text-white p-4 text-xl font-extrabold">
+        <div className="text-white text-xl font-extrabold ">
+            <nav>
+                <ul className="flex">
                     <li>
                         <button className="w-44 bg-home hover:bg-home-hover py-5 px-8" onClick={() => handleTabChange("InformationTab")} >Information</button>
                     </li>
@@ -38,9 +38,8 @@ export default function FeatureBar() {
                         <button className="w-44 bg-home hover:bg-home-hover py-5 px-8" onClick={() => handleTabChange("FormatTab")}>Format     </button>
                     </li>
                 </ul>
-                <br/>
-                {renderTab()} 
-            </div>
-        </nav>
+                <br/>   
+            </nav>
+        </div>
     )
 }
