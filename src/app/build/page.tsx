@@ -2,7 +2,7 @@ import Navbar from "@/components/Navbar";
 import { PlusIcon } from "@heroicons/react/16/solid";
 import React from "react";
 import { useState } from "react";
-import NewResume from "./components/NewResume";
+import NewResume from "./create-resume/NewResume";
 import BuildResume from "./components/BuildResume";
 
 export default function Home() {
