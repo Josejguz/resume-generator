@@ -90,6 +90,7 @@ export default function InformationTab() {
 
     return (
         <div className="w-auto">
+            <br/>
             <form className="flex flex-col" onSubmit={handleSubmit}>
 
                 {/*========== HEADER SECTION ==========*/}
