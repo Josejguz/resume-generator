@@ -3,13 +3,13 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { PlusIcon, PencilSquareIcon, XCircleIcon} from '@heroicons/react/20/solid'
 
-
 export default function BuildResume() {
 
     const [display, setDisplay] = useState("default");
     const [showDialog, setShowDialog] = useState(false);
     const [resumeName, setResumeName] = useState("");
 
+    // Opens and closes the dialog form
     const handleDialog = () => {
         if(showDialog) {
             setShowDialog(false);
@@ -20,6 +20,7 @@ export default function BuildResume() {
         }
     }
 
+    // Closes the dialog when the escape key is pressed
     useEffect(() => {
         const onEscape = (e: KeyboardEvent) => {
             if (e.key === "Escape" && showDialog) {
@@ -35,11 +36,13 @@ export default function BuildResume() {
         }
     }, [showDialog]);
 
+    // Creates a new resume and redirects to the create-resume page
     const createResume = () => {
         setShowDialog(false);
         window.location.href = "/build/create-resume/";
         (document.getElementById("dialog") as HTMLDialogElement)?.close();
     }
+
 
     const renderDisplay = () => {
        switch(display) {
@@ -50,6 +53,8 @@ export default function BuildResume() {
            case "default":
                return (
                    <div className='flex justify-center'>
+
+                        {/*============== Create Resume Dialog Form ============== */}
                         <dialog open={showDialog} className='h-80 w-1/2 rounded-3xl border-4 border-home-hover' id="dialog" >
                             
                                 <div className='bg-home text-white p-4 flex justify-between'>
@@ -72,7 +77,9 @@ export default function BuildResume() {
                                     <button className='bg-home hover:bg-home-hover flex flex-row justify-center text-white p-2 rounded-2xl w-full mt-4' onClick={createResume}>Create Resume <PlusIcon className=' ml-1 h-6'/></button>
                                 </div>
 
-                        </dialog> 
+                        </dialog>
+
+                        {/*============== Create or Modify Resume Buttons ============== */} 
                        <button className="flex flex-col align-middle py-3 px-4 rounded-3xl border-4 h-72 w-72 m-4 border-home hover:bg-home hover:text-white" onClick={/*()=>setDisplay("NewResume")*/ handleDialog}>
                            <h1 className="font-semibold">Create A New Resume </h1>
                            <PlusIcon className="h-6"/>

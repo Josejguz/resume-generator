@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react';
-import FeatureBar from '../components/FeatureBar';
+import FeatureBar from './FeatureBar';
 import { InformationCircleIcon } from '@heroicons/react/16/solid';
-import InformationTab from '../components/InformationTab';
+import InformationTab from './InformationTab';
 import { useState } from 'react';
 
 export default function NewResume() { 

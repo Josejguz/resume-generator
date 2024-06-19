@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from "@/components/Navbar";
-import NewResume from './NewResume';
+import NewResume from './components/NewResume';
 
 export default function Home() {
     return (
