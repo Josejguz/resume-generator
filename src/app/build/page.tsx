@@ -14,7 +14,6 @@ export default function Home() {
                 <br/>
 
                 <div>
-                    {/*<button className="bg-red-500 hover:bg-red-700 py-3 px-4 text-white rounded-3xl"><span>New Resume <PlusIcon className="h-6"/></span></button> */}
                     <BuildResume />
                 </div>
                 <br />
