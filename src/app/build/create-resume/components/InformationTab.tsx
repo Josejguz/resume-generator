@@ -3,10 +3,71 @@ import React from "react";
 import { MinusCircleIcon, PlusIcon } from "@heroicons/react/16/solid";
 import { useState, useEffect } from "react";
 import AddSection from "./AddSection";
+import Header from "./Infotab-components/Header";
+import Objective from "./Infotab-components/Objective";
+import Education from "./Infotab-components/Education";
+import RelevantExperience from "./Infotab-components/RelevantExperience";
+import Skills from "./Infotab-components/Skills";
+import Projects from "./Infotab-components/Projects";
+import WorkExperience from "./Infotab-components/WorkExperience";
+import Extracurriculars from "./Infotab-components/Extracurricular";
 
 export default function InformationTab() {
 
-    const [sections, setSections] = useState(false);
+    type Sections = {
+        header: boolean,
+        objective: boolean,
+        education: boolean,
+        relevant_experience: boolean,
+        skills: boolean,
+        projects: boolean,
+        work_experience: boolean,
+        extracurriculars: boolean,
+    }
+
+    const [activeSections, setActiveSections] = useState<Sections>({
+        header: true,
+        objective: true,
+        education: true,
+        relevant_experience: true,
+        skills: true,
+        projects: true,
+        work_experience: true,
+        extracurriculars: true,
+    });
+
+    const [showDialog, setShowDialog] = useState(false);
+
+        // Opens and closes the dialog form
+        const handleDialog = () => {
+            if(showDialog) {
+                setShowDialog(false);
+                (document.getElementById("dialog") as HTMLDialogElement)?.close();
+            } else {
+                setShowDialog(true);
+                (document.getElementById("dialog") as HTMLDialogElement)?.showModal();
+            }
+        }
+    
+        // Closes the dialog when the escape key is pressed
+        useEffect(() => {
+            const onEscape = (e: KeyboardEvent) => {
+                if (e.key === "Escape" && showDialog) {
+                    setShowDialog(false);
+                    (document.getElementById("dialog") as HTMLDialogElement)?.close();
+                }
+            }
+    
+            document.addEventListener("keydown", onEscape);
+    
+            return () => {
+                document.removeEventListener("keydown", onEscape);
+            }
+        }, [showDialog]);
+
+    const toggleSection = (section: keyof Sections ) => {
+        setActiveSections({ ...activeSections, [section]: !activeSections[section] });
+    };
 
     const [formData, setFormData] = useState({
         first_name: localStorage.getItem("first_name") ||"",
@@ -55,11 +116,10 @@ export default function InformationTab() {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log(formData);
-        localStorage.clear();
-    };
+    const addNewSection = (e: React.MouseEvent<HTMLButtonElement>) => {
+        return <AddSection showDialog={showDialog} handleDialog={handleDialog} toggleSection={toggleSection} />
+    }
+
 
     const hideSection = (section: string) => {
         const sectionElement = document.getElementById(section);
@@ -91,179 +151,51 @@ export default function InformationTab() {
     return (
         <div className="w-auto">
             <br/>
-            <form className="flex flex-col" onSubmit={handleSubmit}>
+            <div className="flex flex-col">
 
                 {/*========== HEADER SECTION ==========*/}
-                <div id="header" className="flex flex-col">
-                    <div className="flex flex-row text-xl font-bold bg-home text-white p-1 rounded-xl">
-                        <h2>Header</h2>
-                    </div>
-
-                    <div className="flex flex-row">
-                        {/*First Name Field*/}
-                        <div className="flex flex-col">
-                            <label htmlFor="first_name">First Name <span className="text-red-500">*</span></label>
-                            <input type="text" id="first_name" name="first_name" value={formData.first_name} placeholder="First Name" onChange={handleChange} className="border-2 border-home" />
-                        </div>
-                        
-                        <div className=" w-2"></div>
-
-                        {/*Last Name Field*/}
-                        <div className="flex flex-col">
-                            <label htmlFor="last_name">Last Name <span className="text-red-500">*</span></label>
-                            <input type="text" id="last_name" name="last_name" value={formData.last_name} placeholder="Last Name" onChange={handleChange} className="border-2 border-home" />
-                        </div>
-                    </div>
-
-                    {/*Email Field*/}
-                    <label htmlFor="email">Email</label>
-                    <input type="email" id="email" name="email" value={formData.email} placeholder="Email Address" onChange={handleChange} className="border-2 border-home w-1/2" />
-
-                    {/*Phone Number Field*/}
-                    <label htmlFor="phone">Phone</label>
-                    <input type="tel" id="phone" name="phone" value={formData.phone} placeholder="(XXX)XXX-XXXX" onChange={handleChange} className="border-2 border-home w-1/2"/>
-
-                    {/*LinkedIn Field*/}
-                    <label htmlFor="linkedIn">LinkedIn</label>
-                    <input type="text" id="linkedIn" name="linkedIn" value={formData.linkedIn} onChange={handleChange} className="border-2 border-home w-1/2"/>
-                    <br/>
+                <div id="header">
+                    <Header handleChange={handleChange} formData={formData} />
                 </div>
 
                 {/*========== OBJECTIVE SECTION ==========*/}
-                <div id="objective" className="flex flex-col">
-                    <div className="flex flex-row text-xl font-bold bg-home text-white p-1 rounded-xl">
-                        <h2 className="flex w-11/12">Objective</h2>
-                        <MinusCircleIcon className="h-7 w-7 hover:text-gray-300" onClick={() => hideSection("objective")} />
-                    </div>
-
-                    {/*Objective Field*/}
-                    <label htmlFor="objective_field">Objective</label>
-                    <textarea id="objective_field" name="objective_field" value={formData.objective_field} placeholder="Write objective statement" onChange={handleChange} className="border-2 border-home"/>
-                    <br/>
+                <div id="objective">
+                    <Objective formData={formData} handleChange={handleChange} hideSection={hideSection} />
                 </div>
         
                 {/*========== EDUCATION SECTION ==========*/}
-                <div id="education" className="flex flex-col">
-                    <div className="flex flex-row text-xl font-bold bg-home text-white p-1 rounded-xl">
-                        <h2 className="flex w-11/12">Education</h2>
-                        <MinusCircleIcon className="h-7 w-7 hover:text-gray-300"  onClick={() => hideSection("education")}/>
-                    </div>
-
-                    {/*School Field*/}
-                    <label htmlFor="school">School</label>
-                    <input type="text" id="school" name="school" value={formData.school} placeholder="School" onChange={handleChange} className="border-2 border-home w-1/2"/>
-
-                    {/*Degree Field*/}
-                    <label htmlFor="degree">Degree</label>
-                    <input list="degree" name="degree" value={formData.degree} onChange={handleChange} className="border-2 border-home w-1/2"/>
-                    <datalist id="degree" >
-                        <option value="Associate's"/>
-                        <option value="Bachelor's"/>
-                        <option value="Master's"/>
-                        <option value="PhD"/>
-                    </datalist>
-
-                    {/*Major Field*/}
-                    <label htmlFor="major">Major</label>
-                    <input type="text" id="major" name="major" value={formData.major} placeholder="Major" onChange={handleChange} className="border-2 border-home w-1/2"/>
-
-                    {/*Graduation Date Field*/}
-                    <label htmlFor="graduation">Graduation Date</label>
-                    <input type="date" id="graduation" name="graduation" value={formData.graduation} onChange={handleChange} className="border-2 border-home w-1/2"/>
-
-                    {/*GPA Field*/}
-                    <label htmlFor="gpa">GPA</label>
-                    <input type="number" id="gpa" name="gpa" value={formData.gpa} onChange={handleChange} className="border-2 border-home w-1/4"/>
-                    <br/>
+                <div id="education">
+                    <Education formData={formData} handleChange={handleChange} hideSection={hideSection} />
                 </div>
                 
                 {/*========== RELEVANT EXPERIENCE SECTION ==========*/}
-                <div id="relevant_experience" className="flex flex-col">
-                    <div className="flex flex-row text-xl font-bold bg-home text-white p-1 rounded-xl">
-                        <h2 className="flex w-11/12">Relevant Experience</h2>
-                        <MinusCircleIcon className="h-7 w-7 hover:text-gray-300" onClick={() => hideSection("relevant_experience")}/>
-                    </div>
-
-                    {/*Relevant Job Title Field*/}
-                    <label htmlFor="relevant_job_title">Job Title</label>
-                    <input type="text" id="relevant_job_title" name="relevant_job_title" value={formData.relevant_job_title} onChange={handleChange} className="border-2 border-home w-1/2"/>
-
-                    {/*Relevant Start Date Field*/}
-                    <label htmlFor="relevant_start_date">Start Date</label>
-                    <input type="date" id="relevant_start_date" name="relevant_start_date" value={formData.relevant_start_date} onChange={handleChange} className="border-2 border-home w-1/2"/>
-
-                    {/*Relevant End Date Field*/}
-                    <label htmlFor="relevant_end_date">End Date</label>
-                    <input type="date" id="relevant_end_date" name="relevant_end_date" value={formData.relevant_end_date} onChange={handleChange} className="border-2 border-home w-1/2"/>
-
-                    {/*Relevant Experience Field*/}
-                    <label htmlFor="relevant_experience_field">Relevant Experience</label>
-                    <textarea id="relevant_experience_field" name="relevant_experience_field" value={formData.relevant_experience_field} onChange={handleChange} className="border-2 border-home"/>
-                    <br/>
+                <div id="relevant_experience">
+                    <RelevantExperience formData={formData} handleChange={handleChange} hideSection={hideSection} />
                 </div>
 
                 {/*========== SKILLS SECTION ==========*/}
                 <div id="skill_section" className="flex flex-col">
-                    <div className="flex flex-row text-xl font-bold bg-home text-white p-1 rounded-xl">
-                        <h2 className="flex w-11/12">Skills</h2>
-                        <MinusCircleIcon className="h-7 w-7 hover:text-gray-300" onClick={() => hideSection("skill_section")}/>
-                    </div>
-                    <br/>
-
-                    <h1>Skills</h1>
-                    <ul className="flex flex-rows">
-                        {skill_list ? skill_list.map((skill, index) => {
-                            return <li key={index}><button className="bg-home hover:bg-home-hover text-white p-2 rounded-lg mr-2 flex flex-rows" >{skill}
-                            <MinusCircleIcon className=" ml-2 h-7 w-7 hover:text-gray-300" onClick={removeSkill}/></button>
-                            </li>
-                        }): null}
-                    </ul>
-                    <br/>
-
-                    <label htmlFor="skills">Add Skill</label>
-                    <div className="flex flex-row">
-                        <input type="text" id="skills" name="skills" className="border-2 border-home w-1/2"/>
-                        <button className="bg-home hover:bg-home-hover text-white p-2 rounded-lg ml-2" onClick={addSkill} >Add</button>
-                    </div>
-                    <br/>
+                    <Skills skill_list={skill_list} addSkill={addSkill} removeSkill={removeSkill} hideSection={hideSection} />
                 </div>
 
                 {/*========== PROJECTS SECTION ==========*/}
                 <div id="projects" className="flex flex-col">
-                    <div className="flex flex-row text-xl font-bold bg-home text-white p-1 rounded-xl">
-                        <h2 className="flex w-11/12">Projects</h2>
-                        <MinusCircleIcon className="h-7 w-7 hover:text-gray-300" onClick={() => hideSection("projects")}/>
-                    </div>
-                    <br/>
+                    <Projects hideSection={hideSection} />
                 </div>
 
                 {/*========== WORK EXPERIENCE SECTION ==========*/}
                 <div id="work_experience" className="flex flex-col">
-                    <div className="flex flex-row text-xl font-bold bg-home text-white p-1 rounded-xl">
-                        <h2 className="flex w-11/12">Work Experience</h2>
-                        <MinusCircleIcon className="h-7 w-7 hover:text-gray-300" onClick={() => hideSection("work_experience")}/>
-                    </div>
-
-                    <label htmlFor="work_experience">Work Experience</label>
-                    <textarea id="work_experience" name="work_experience" value={formData.work_experience} onChange={handleChange} className="border-2 border-home"/>
-                    <br/>
+                    <WorkExperience formData={formData} handleChange={handleChange} hideSection={hideSection} />
                 </div>
 
                 {/*========== EXTRACURRICULARS SECTION ==========*/}
-                <div id="extracurriculars" className="flex flex-col">
-                    <div className="flex flex-row text-xl font-bold bg-home text-white p-1 rounded-xl">
-                        <h2 className="flex w-11/12">Extracirrculars</h2>
-                        <MinusCircleIcon className="h-7 w-7 hover:text-gray-300" onClick={() => hideSection("extracurriculars")}/>
-                    </div>
-                    <br/>
+                <div id="extracurriculars">
+                    <Extracurriculars hideSection={hideSection} />
                 </div>
 
                 <button className="bg-home hover:bg-home-hover text-white p-2 rounded-lg" ><span className="flex justify-center flex-row">Add Section <PlusIcon className="h-6 w-6" /></span></button>
                 <br/>
-
-                <button type="submit" className="bg-home hover:bg-home-hover text-white p-2 rounded-lg">Save</button>
-                <br/>
-            </form>
+            </div>
         </div>
     )
 }
