@@ -1,8 +1,5 @@
 'use client'
-
 import { PlusIcon, PencilSquareIcon, XCircleIcon } from '@heroicons/react/20/solid'
-import { useState } from 'react';
-
 
 export default function ResumeOptions({showDialog, handleDialog, createResume}: {showDialog: boolean, handleDialog: () => void, createResume: () => void}) {
 
